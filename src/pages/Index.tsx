@@ -36,22 +36,22 @@ export default function Dashboard() {
   return (
     <AppLayout>
       {/* Header */}
-      <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-8">
+      <div className="flex flex-col gap-4 mb-8">
         <div>
-          <h1 className="text-2xl lg:text-3xl font-bold text-foreground tracking-tight">
+          <h1 className="text-2xl sm:text-2xl lg:text-3xl font-bold text-foreground tracking-tight">
             Dashboard
           </h1>
-          <p className="text-foreground-tertiary mt-1">
+          <p className="text-foreground-tertiary mt-1 text-sm sm:text-base">
             Acompanhe seus gastos e consumo de combustível
           </p>
         </div>
-        <div className="flex gap-3">
-          <Button variant="outline" className="gap-2" onClick={() => navigate('/veiculos')}>
+        <div className="flex flex-col sm:flex-row gap-3">
+          <Button variant="outline" className="gap-2 justify-center sm:justify-start" onClick={() => navigate('/veiculos')}>
             <Car size={18} />
-            <span className="hidden sm:inline">Gerenciar veículos</span>
+            <span className="hidden sm:inline">Meus veículos</span>
             <span className="sm:hidden">Veículos</span>
           </Button>
-          <Button variant="accent" className="gap-2" onClick={() => navigate('/abastecer')}>
+          <Button className="gap-2 justify-center sm:justify-start" onClick={() => navigate('/abastecer')}>
             <Plus size={18} />
             <span className="hidden sm:inline">Novo abastecimento</span>
             <span className="sm:hidden">Abastecer</span>
@@ -77,7 +77,7 @@ export default function Dashboard() {
       )}
 
       {/* Metrics Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-8">
         <MetricCard
           label="Total gasto"
           value={formatCurrency(totalSpent).replace('R$', '').trim().split(',')[0]}
@@ -86,21 +86,21 @@ export default function Dashboard() {
           iconVariant="money"
         />
         <MetricCard
-          label="Litros abastecidos"
+          label="Litros"
           value={Math.floor(totalLiters).toLocaleString('pt-BR')}
           unit={`,${(totalLiters % 1).toFixed(1).split('.')[1] || '0'} L`}
           icon={<Droplet size={20} />}
           iconVariant="fuel"
         />
         <MetricCard
-          label="Abastecimentos"
+          label="Abastec."
           value={refuels.length.toString()}
-          unit=" registros"
+          unit=" regs"
           icon={<MapPin size={20} />}
           iconVariant="distance"
         />
         <MetricCard
-          label="Consumo médio"
+          label="Consumo"
           value={avgConsumption > 0 ? avgConsumption.toFixed(1).replace('.', ',') : '0,0'}
           unit=" km/L"
           icon={<Gauge size={20} />}
@@ -110,14 +110,14 @@ export default function Dashboard() {
 
       {/* Recent Refuels Section */}
       <section>
-        <div className="flex items-center justify-between mb-5">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-5">
           <h2 className="text-xl font-semibold text-foreground">
             Últimos abastecimentos
           </h2>
           {hasRefuels && (
             <button
               onClick={() => navigate('/historico')}
-              className="text-sm font-medium text-foreground-secondary hover:text-foreground transition-colors"
+              className="text-sm font-medium text-foreground-secondary hover:text-foreground transition-colors self-start sm:self-auto"
             >
               Ver todos
             </button>
@@ -157,6 +157,6 @@ export default function Dashboard() {
           />
         )}
       </section>
-    </AppLayout>
+    </AppLayout >
   );
 }

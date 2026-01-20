@@ -10,7 +10,7 @@ export function AppLayout({ children }: AppLayoutProps) {
     <div className="flex min-h-screen w-full bg-background">
       <Sidebar />
       <main className="flex-1 overflow-y-auto scrollbar-uber">
-        <div className="p-6 lg:p-8 pt-16 lg:pt-8">
+        <div className="p-4 sm:p-6 lg:p-8 pt-16 sm:pt-16 lg:pt-8">
           {children}
         </div>
       </main>
