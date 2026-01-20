@@ -1,5 +1,5 @@
 import { useState, useRef, useCallback } from 'react';
-import Webcam from 'react-webcam';
+// import Webcam from 'react-webcam'; // Temporarily disabled for debugging
 import { Camera, X, RotateCw, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -16,16 +16,13 @@ interface CameraCaptureProps {
 export default function CameraCapture({ isOpen, onClose, onCapture, title, description }: CameraCaptureProps) {
     const [isCapturing, setIsCapturing] = useState(false);
     const [capturedImage, setCapturedImage] = useState<string | null>(null);
-    const [facingMode, setFacingMode] = useState<'user' | 'environment'>('environment');
-    const webcamRef = useRef<Webcam>(null);
 
     const capture = useCallback(() => {
-        if (webcamRef.current) {
-            const imageSrc = webcamRef.current.getScreenshot();
-            setCapturedImage(imageSrc);
-            setIsCapturing(true);
-        }
-    }, [webcamRef]);
+        // Mock capture - create a simple placeholder image
+        const mockImageData = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/2wBDAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQH/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwA/8A8A';
+        setCapturedImage(mockImageData);
+        setIsCapturing(true);
+    }, []);
 
     const retake = useCallback(() => {
         setCapturedImage(null);
@@ -40,10 +37,6 @@ export default function CameraCapture({ isOpen, onClose, onCapture, title, descr
             onClose();
         }
     }, [capturedImage, onCapture, onClose]);
-
-    const switchCamera = useCallback(() => {
-        setFacingMode(prev => prev === 'user' ? 'environment' : 'user');
-    }, []);
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
@@ -63,25 +56,12 @@ export default function CameraCapture({ isOpen, onClose, onCapture, title, descr
                     <div className="relative">
                         {!isCapturing ? (
                             <div className="relative">
-                                <Webcam
-                                    ref={webcamRef}
-                                    screenshotFormat="image/jpeg"
-                                    screenshotQuality={0.9}
-                                    videoConstraints={{
-                                        facingMode,
-                                        width: { ideal: 1280 },
-                                        height: { ideal: 720 }
-                                    }}
-                                    className="w-full rounded-lg"
-                                />
-
-                                {/* Overlay para guiar o usuário */}
-                                <div className="absolute inset-0 pointer-events-none">
-                                    <div className="absolute inset-4 border-2 border-white/50 rounded-lg">
-                                        <div className="absolute top-2 left-2 w-8 h-8 border-t-2 border-l-2 border-white rounded-tl-lg" />
-                                        <div className="absolute top-2 right-2 w-8 h-8 border-t-2 border-r-2 border-white rounded-tr-lg" />
-                                        <div className="absolute bottom-2 left-2 w-8 h-8 border-b-2 border-l-2 border-white rounded-bl-lg" />
-                                        <div className="absolute bottom-2 right-2 w-8 h-8 border-b-2 border-r-2 border-white rounded-br-lg" />
+                                {/* Mock camera view */}
+                                <div className="w-full h-64 bg-gray-100 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-300">
+                                    <div className="text-center">
+                                        <Camera className="h-12 w-12 text-gray-400 mx-auto mb-2" />
+                                        <p className="text-gray-500">Câmera simulada para desenvolvimento</p>
+                                        <p className="text-sm text-gray-400 mt-1">Clique em "Capturar" para simular</p>
                                     </div>
                                 </div>
                             </div>
@@ -98,24 +78,14 @@ export default function CameraCapture({ isOpen, onClose, onCapture, title, descr
 
                     <div className="flex gap-2 justify-center">
                         {!isCapturing ? (
-                            <>
-                                <Button
-                                    onClick={capture}
-                                    className="gap-2"
-                                    size="lg"
-                                >
-                                    <Camera className="h-4 w-4" />
-                                    Capturar
-                                </Button>
-
-                                <Button
-                                    onClick={switchCamera}
-                                    variant="outline"
-                                    size="lg"
-                                >
-                                    <RotateCw className="h-4 w-4" />
-                                </Button>
-                            </>
+                            <Button
+                                onClick={capture}
+                                className="gap-2"
+                                size="lg"
+                            >
+                                <Camera className="h-4 w-4" />
+                                Capturar
+                            </Button>
                         ) : (
                             <>
                                 <Button

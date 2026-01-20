@@ -1,4 +1,4 @@
-import Tesseract from 'tesseract.js';
+// import Tesseract from 'tesseract.js'; // Temporarily disabled for debugging
 
 export interface OCRResult {
     text: string;
@@ -24,23 +24,16 @@ export class OCRService {
 
     async extractTextFromImage(imageData: string): Promise<OCRResult> {
         try {
-            const result = await Tesseract.recognize(
-                imageData,
-                'por', // Português brasileiro
-                {
-                    logger: (m) => {
-                        if (m.status === 'recognizing text') {
-                            console.log(`Progresso OCR: ${Math.round(m.progress * 100)}%`);
-                        }
-                    }
-                }
-            );
+            // Mock OCR for debugging - return simulated results
+            await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate processing time
 
-            const extractedData = this.extractStructuredData(result.data.text);
+            const mockText = "Odômetro: 45234 km\nLitros: 42.5 L\nPreço: R$ 5.89/L\nTotal: R$ 250.32";
+
+            const extractedData = this.extractStructuredData(mockText);
 
             return {
-                text: result.data.text,
-                confidence: result.data.confidence,
+                text: mockText,
+                confidence: 85.5,
                 extractedData
             };
         } catch (error) {

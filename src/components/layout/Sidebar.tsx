@@ -2,7 +2,7 @@ import { useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
-  Calculator, TrendingUp, DollarSign, Gauge, Info, ChevronRight, Target, Zap, Car, Fuel, History, Settings, Wallet, BarChart3, Crown
+  Calculator, TrendingUp, DollarSign, Gauge, Info, ChevronRight, Target, Zap, Car, Fuel, History, Settings, Wallet, BarChart3, Crown, X, Menu, LogOut
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
