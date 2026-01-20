@@ -13,6 +13,7 @@ import {
   ChevronRight,
   Wallet,
   Zap,
+  TrendingUp,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -25,6 +26,7 @@ const menuItems = [
   { icon: Fuel, label: "Abastecer", path: "/abastecer" },
   { icon: History, label: "Histórico", path: "/historico" },
   { icon: Calculator, label: "Calculadora", path: "/calculadora" },
+  { icon: TrendingUp, label: "Economia", path: "/economia" },
   { icon: Wallet, label: "Orçamento", path: "/orcamento" },
   { icon: Zap, label: "Recarga", path: "/recarga" },
   { icon: Settings, label: "Configurações", path: "/configuracoes" },
@@ -190,9 +192,9 @@ export function Sidebar({ className }: SidebarProps) {
                   <p className="text-sm font-medium text-foreground truncate">{getUserName()}</p>
                   <p className="text-xs text-foreground-tertiary truncate">{user?.email || 'Carregando...'}</p>
                 </div>
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
+                <Button
+                  variant="ghost"
+                  size="icon"
                   className="flex-shrink-0"
                   onClick={handleLogout}
                   title="Sair"
@@ -202,9 +204,9 @@ export function Sidebar({ className }: SidebarProps) {
               </>
             )}
             {isCollapsed && (
-              <Button 
-                variant="ghost" 
-                size="icon" 
+              <Button
+                variant="ghost"
+                size="icon"
                 className="mt-2"
                 onClick={handleLogout}
                 title="Sair"

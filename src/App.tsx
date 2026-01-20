@@ -12,6 +12,7 @@ import Calculadora from "./pages/Calculadora";
 import Configuracoes from "./pages/Configuracoes";
 import Orcamento from "./pages/Orcamento";
 import Recarga from "./pages/Recarga";
+import Economia from "./pages/Economia";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
@@ -26,7 +27,7 @@ const App = () => (
         <Routes>
           {/* Public route */}
           <Route path="/auth" element={<Auth />} />
-          
+
           {/* Protected routes */}
           <Route
             path="/"
@@ -92,7 +93,15 @@ const App = () => (
               </ProtectedRoute>
             }
           />
-          
+          <Route
+            path="/economia"
+            element={
+              <ProtectedRoute>
+                <Economia />
+              </ProtectedRoute>
+            }
+          />
+
           {/* 404 - Public */}
           <Route path="*" element={<NotFound />} />
         </Routes>
