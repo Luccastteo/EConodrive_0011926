@@ -1,0 +1,11 @@
+{
+  "name": "econodrive-fuel-saver",
+  "version": "1.0.0",
+  "description": "A fuel-saving application",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
