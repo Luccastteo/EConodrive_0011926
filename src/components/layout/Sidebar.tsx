@@ -2,18 +2,7 @@ import { useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
-  Car,
-  Fuel,
-  History,
-  Calculator,
-  Settings,
-  LogOut,
-  Menu,
-  X,
-  ChevronRight,
-  Wallet,
-  Zap,
-  TrendingUp,
+  Calculator, TrendingUp, DollarSign, Gauge, Info, ChevronRight, Target, Zap, Car, Fuel, History, Settings, Wallet, BarChart3, Crown
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -28,7 +17,8 @@ const menuItems = [
   { icon: Calculator, label: "Calculadora", path: "/calculadora" },
   { icon: TrendingUp, label: "Economia", path: "/economia" },
   { icon: Wallet, label: "Orçamento", path: "/orcamento" },
-  { icon: Zap, label: "Recarga", path: "/recarga" },
+  { icon: BarChart3, label: "Recarga", path: "/recarga" },
+  { icon: Crown, label: "Planos", path: "/planos" },
   { icon: Settings, label: "Configurações", path: "/configuracoes" },
 ];
 

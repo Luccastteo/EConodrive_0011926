@@ -13,6 +13,7 @@ import Configuracoes from "./pages/Configuracoes";
 import Orcamento from "./pages/Orcamento";
 import Recarga from "./pages/Recarga";
 import Economia from "./pages/Economia";
+import Planos from "./pages/Planos";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
@@ -98,6 +99,14 @@ const App = () => (
             element={
               <ProtectedRoute>
                 <Economia />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/planos"
+            element={
+              <ProtectedRoute>
+                <Planos />
               </ProtectedRoute>
             }
           />
