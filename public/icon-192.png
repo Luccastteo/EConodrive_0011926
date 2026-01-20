@@ -1,0 +1,30 @@
+<svg width="192" height="192" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle -->
+  <circle cx="16" cy="16" r="14" fill="#10b981" stroke="#059669" stroke-width="2"/>
+  
+  <!-- Gas station icon -->
+  <g fill="white">
+    <!-- Main pump structure -->
+    <rect x="8" y="6" width="3" height="8" rx="0.5"/>
+    <rect x="21" y="6" width="3" height="8" rx="0.5"/>
+    
+    <!-- Top horizontal bar -->
+    <rect x="8" y="5" width="16" height="2" rx="0.5"/>
+    
+    <!-- Center display -->
+    <rect x="12" y="8" width="8" height="6" rx="1"/>
+    
+    <!-- Pump nozzle -->
+    <rect x="20" y="10" width="4" height="2" rx="0.5"/>
+    <rect x="24" y="11" width="2" height="3" rx="0.5"/>
+    
+    <!-- Fuel drops -->
+    <circle cx="9" cy="20" r="1"/>
+    <circle cx="23" cy="20" r="1"/>
+    <circle cx="11" cy="22" r="0.8"/>
+    <circle cx="21" cy="22" r="0.8"/>
+  </g>
+  
+  <!-- Shine effect -->
+  <ellipse cx="12" cy="10" rx="2" ry="1" fill="white" opacity="0.3"/>
+</svg>
