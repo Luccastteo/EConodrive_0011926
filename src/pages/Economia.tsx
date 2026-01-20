@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Calculator, TrendingUp, DollarSign, Gauge, Info, ChevronRight, Target, Zap } from "lucide-react";
+import { Calculator, TrendingUp, DollarSign, Gauge, Info, ChevronRight, Target, Zap, X, Car, Route, Calendar } from "lucide-react";
 import { AppLayout } from "@/components/layout/AppLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -7,12 +7,14 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useEconomyCalculator } from "@/hooks/use-economy-calculator";
 import { formatCurrency } from "@/lib/budget-utils";
 
 export default function Economia() {
     const [investment, setInvestment] = useState<string>("100");
     const [selectedFuel, setSelectedFuel] = useState<'gasolina' | 'etanol' | 'diesel'>('gasolina');
+    const [selectedCard, setSelectedCard] = useState<string | null>(null);
     const { calculations, calculateProjection, getBestFuelForInvestment, stats, hasData } = useEconomyCalculator();
 
     const investmentValue = parseFloat(investment) || 0;
@@ -73,42 +75,199 @@ export default function Economia() {
                 {/* Stats Overview */}
                 {stats && (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <Card>
-                            <CardContent className="p-4">
-                                <div className="flex items-center gap-2">
-                                    <DollarSign className="h-4 w-4 text-green-600" />
-                                    <span className="text-sm text-muted-foreground">Total investido</span>
+                        <Dialog>
+                            <DialogTrigger asChild>
+                                <Card className="cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-green-200/50 group">
+                                    <CardContent className="p-4">
+                                        <div className="flex items-center gap-2">
+                                            <DollarSign className="h-4 w-4 text-green-600 group-hover:animate-pulse" />
+                                            <span className="text-sm text-muted-foreground">Total investido</span>
+                                        </div>
+                                        <p className="text-2xl font-bold mt-1">{formatCurrency(stats.totalInvestment)}</p>
+                                        <div className="mt-2 text-xs text-green-600 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            Clique para detalhes →
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            </DialogTrigger>
+                            <DialogContent className="sm:max-w-md">
+                                <DialogHeader>
+                                    <DialogTitle className="flex items-center gap-2">
+                                        <DollarSign className="h-5 w-5 text-green-600" />
+                                        Análise de Investimento
+                                    </DialogTitle>
+                                </DialogHeader>
+                                <div className="space-y-4">
+                                    <div className="bg-gradient-to-r from-green-50 to-emerald-50 p-4 rounded-lg">
+                                        <h4 className="font-semibold text-green-800 mb-2">Resumo Financeiro</h4>
+                                        <div className="space-y-2 text-sm">
+                                            <div className="flex justify-between">
+                                                <span className="text-gray-600">Total investido:</span>
+                                                <span className="font-bold text-green-700">{formatCurrency(stats.totalInvestment)}</span>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span className="text-gray-600">Média por abastecimento:</span>
+                                                <span className="font-medium">{formatCurrency(stats.totalInvestment / (calculations ? Object.keys(calculations).reduce((sum, key) => sum + calculations[key].count, 0) : 1))}</span>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span className="text-gray-600">Economia potencial:</span>
+                                                <span className="font-medium text-green-600">Até 15% com melhor planejamento</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="text-xs text-gray-500">
+                                        💡 Dica: Compare preços entre postos e use o app para encontrar o melhor custo-benefício.
+                                    </div>
                                 </div>
-                                <p className="text-2xl font-bold mt-1">{formatCurrency(stats.totalInvestment)}</p>
-                            </CardContent>
-                        </Card>
-                        <Card>
-                            <CardContent className="p-4">
-                                <div className="flex items-center gap-2">
-                                    <TrendingUp className="h-4 w-4 text-blue-600" />
-                                    <span className="text-sm text-muted-foreground">Quilometragem total</span>
+                            </DialogContent>
+                        </Dialog>
+
+                        <Dialog>
+                            <DialogTrigger asChild>
+                                <Card className="cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-200/50 group">
+                                    <CardContent className="p-4">
+                                        <div className="flex items-center gap-2">
+                                            <TrendingUp className="h-4 w-4 text-blue-600 group-hover:animate-pulse" />
+                                            <span className="text-sm text-muted-foreground">Quilometragem total</span>
+                                        </div>
+                                        <p className="text-2xl font-bold mt-1">{Math.floor(stats.totalKilometers).toLocaleString('pt-BR')} km</p>
+                                        <div className="mt-2 text-xs text-blue-600 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            Clique para detalhes →
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            </DialogTrigger>
+                            <DialogContent className="sm:max-w-md">
+                                <DialogHeader>
+                                    <DialogTitle className="flex items-center gap-2">
+                                        <Route className="h-5 w-5 text-blue-600" />
+                                        Análise de Quilometragem
+                                    </DialogTitle>
+                                </DialogHeader>
+                                <div className="space-y-4">
+                                    <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-lg">
+                                        <h4 className="font-semibold text-blue-800 mb-2">Resumo de Percursos</h4>
+                                        <div className="space-y-2 text-sm">
+                                            <div className="flex justify-between">
+                                                <span className="text-gray-600">Total percorrido:</span>
+                                                <span className="font-bold text-blue-700">{Math.floor(stats.totalKilometers).toLocaleString('pt-BR')} km</span>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span className="text-gray-600">Média por mês:</span>
+                                                <span className="font-medium">{Math.floor(stats.totalKilometers / 12).toLocaleString('pt-BR')} km</span>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span className="text-gray-600">Média por semana:</span>
+                                                <span className="font-medium">{Math.floor(stats.totalKilometers / 52).toLocaleString('pt-BR')} km</span>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span className="text-gray-600">Média por dia:</span>
+                                                <span className="font-medium">{Math.floor(stats.totalKilometers / 365).toLocaleString('pt-BR')} km</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="text-xs text-gray-500">
+                                        🚗 Seu consumo está {stats.avgCostPerKm < 0.50 ? 'acima' : 'abaixo'} da média nacional.
+                                    </div>
                                 </div>
-                                <p className="text-2xl font-bold mt-1">{Math.floor(stats.totalKilometers).toLocaleString('pt-BR')} km</p>
-                            </CardContent>
-                        </Card>
-                        <Card>
-                            <CardContent className="p-4">
-                                <div className="flex items-center gap-2">
-                                    <Gauge className="h-4 w-4 text-purple-600" />
-                                    <span className="text-sm text-muted-foreground">Custo por km</span>
+                            </DialogContent>
+                        </Dialog>
+
+                        <Dialog>
+                            <DialogTrigger asChild>
+                                <Card className="cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-purple-200/50 group">
+                                    <CardContent className="p-4">
+                                        <div className="flex items-center gap-2">
+                                            <Gauge className="h-4 w-4 text-purple-600 group-hover:animate-pulse" />
+                                            <span className="text-sm text-muted-foreground">Custo por km</span>
+                                        </div>
+                                        <p className="text-2xl font-bold mt-1">R$ {stats.avgCostPerKm.toFixed(3)}</p>
+                                        <div className="mt-2 text-xs text-purple-600 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            Clique para detalhes →
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            </DialogTrigger>
+                            <DialogContent className="sm:max-w-md">
+                                <DialogHeader>
+                                    <DialogTitle className="flex items-center gap-2">
+                                        <Gauge className="h-5 w-5 text-purple-600" />
+                                        Análise de Eficiência
+                                    </DialogTitle>
+                                </DialogHeader>
+                                <div className="space-y-4">
+                                    <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-4 rounded-lg">
+                                        <h4 className="font-semibold text-purple-800 mb-2">Custo por Quilômetro</h4>
+                                        <div className="space-y-2 text-sm">
+                                            <div className="flex justify-between">
+                                                <span className="text-gray-600">Seu custo médio:</span>
+                                                <span className="font-bold text-purple-700">R$ {stats.avgCostPerKm.toFixed(3)}</span>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span className="text-gray-600">Média nacional:</span>
+                                                <span className="font-medium">R$ 0.450</span>
+                                            </div>
+                                            <div className="flex justify-between">
+                                                <span className="text-gray-600">Diferença:</span>
+                                                <span className={`font-medium ${(0.450 - stats.avgCostPerKm) > 0 ? 'text-green-600' : 'text-red-600'}`}>
+                                                    {(0.450 - stats.avgCostPerKm) > 0 ? '+' : ''}R$ {Math.abs(0.450 - stats.avgCostPerKm).toFixed(3)}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="text-xs text-gray-500">
+                                        ⚡ Melhore sua eficiência com manutenção regular e condução econômica.
+                                    </div>
                                 </div>
-                                <p className="text-2xl font-bold mt-1">R$ {stats.avgCostPerKm.toFixed(3)}</p>
-                            </CardContent>
-                        </Card>
-                        <Card>
-                            <CardContent className="p-4">
-                                <div className="flex items-center gap-2">
-                                    <Target className="h-4 w-4 text-orange-600" />
-                                    <span className="text-sm text-muted-foreground">Melhor combustível</span>
+                            </DialogContent>
+                        </Dialog>
+
+                        <Dialog>
+                            <DialogTrigger asChild>
+                                <Card className="cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-orange-200/50 group">
+                                    <CardContent className="p-4">
+                                        <div className="flex items-center gap-2">
+                                            <Target className="h-4 w-4 text-orange-600 group-hover:animate-pulse" />
+                                            <span className="text-sm text-muted-foreground">Melhor combustível</span>
+                                        </div>
+                                        <p className="text-2xl font-bold mt-1 capitalize">{stats.mostEfficientFuel}</p>
+                                        <div className="mt-2 text-xs text-orange-600 opacity-0 group-hover:opacity-100 transition-opacity">
+                                            Clique para detalhes →
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            </DialogTrigger>
+                            <DialogContent className="sm:max-w-md">
+                                <DialogHeader>
+                                    <DialogTitle className="flex items-center gap-2">
+                                        <Target className="h-5 w-5 text-orange-600" />
+                                        Análise de Combustíveis
+                                    </DialogTitle>
+                                </DialogHeader>
+                                <div className="space-y-4">
+                                    <div className="bg-gradient-to-r from-orange-50 to-amber-50 p-4 rounded-lg">
+                                        <h4 className="font-semibold text-orange-800 mb-2">Comparativo de Combustíveis</h4>
+                                        <div className="space-y-3">
+                                            {calculations && Object.entries(calculations).map(([fuelType, calc]) => (
+                                                <div key={fuelType} className="flex items-center justify-between p-2 bg-white/50 rounded">
+                                                    <div className="flex items-center gap-2">
+                                                        <span className="text-lg">{getFuelIcon(fuelType)}</span>
+                                                        <span className="font-medium capitalize text-sm">{fuelType}</span>
+                                                    </div>
+                                                    <div className="text-right">
+                                                        <div className="font-bold text-sm">{calc.averageConsumption.toFixed(1)} km/L</div>
+                                                        <div className="text-xs text-gray-500">R$ {calc.costPerKilometer.toFixed(3)}/km</div>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                    <div className="text-xs text-gray-500">
+                                        ⚡ {stats.mostEfficientFuel === 'gasolina' ? 'Gasolina' : stats.mostEfficientFuel === 'etanol' ? 'Etanol' : 'Diesel'} oferece melhor custo-benefício para seu veículo.
+                                    </div>
                                 </div>
-                                <p className="text-2xl font-bold mt-1 capitalize">{stats.mostEfficientFuel}</p>
-                            </CardContent>
-                        </Card>
+                            </DialogContent>
+                        </Dialog>
                     </div>
                 )}
 
