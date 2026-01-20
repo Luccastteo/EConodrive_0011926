@@ -314,53 +314,201 @@ export default function Economia() {
                                         <h3 className="font-semibold text-lg">Resultado da Simulação</h3>
 
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                            <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
-                                                <CardContent className="p-4">
-                                                    <div className="flex items-center gap-2 mb-2">
-                                                        <TrendingUp className="h-4 w-4 text-blue-600" />
-                                                        <span className="text-sm font-medium text-blue-800">Quilometragem total</span>
+                                            <Dialog>
+                                                <DialogTrigger asChild>
+                                                    <Card className="cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-blue-200/50 group bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
+                                                        <CardContent className="p-4">
+                                                            <div className="flex items-center gap-2 mb-2">
+                                                                <TrendingUp className="h-4 w-4 text-blue-600 group-hover:animate-pulse" />
+                                                                <span className="text-sm font-medium text-blue-800">Quilometragem total</span>
+                                                            </div>
+                                                            <p className="text-2xl font-bold text-blue-900">
+                                                                {Math.floor(projection.projectedKilometers).toLocaleString('pt-BR')} km
+                                                            </p>
+                                                            <div className="mt-2 text-xs text-blue-600 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                                Clique para análise completa →
+                                                            </div>
+                                                        </CardContent>
+                                                    </Card>
+                                                </DialogTrigger>
+                                                <DialogContent className="sm:max-w-md">
+                                                    <DialogHeader>
+                                                        <DialogTitle className="flex items-center gap-2">
+                                                            <Route className="h-5 w-5 text-blue-600" />
+                                                            Análise de Quilometragem Projetada
+                                                        </DialogTitle>
+                                                    </DialogHeader>
+                                                    <div className="space-y-4">
+                                                        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-lg">
+                                                            <h4 className="font-semibold text-blue-800 mb-2">Projeção Completa</h4>
+                                                            <div className="space-y-2 text-sm">
+                                                                <div className="flex justify-between">
+                                                                    <span className="text-gray-600">Com R$ {investmentValue} em {selectedFuel}:</span>
+                                                                    <span className="font-bold text-blue-700">{Math.floor(projection.projectedKilometers).toLocaleString('pt-BR')} km</span>
+                                                                </div>
+                                                                <div className="flex justify-between">
+                                                                    <span className="text-gray-600">Equivale a:</span>
+                                                                    <span className="font-medium">{Math.floor(projection.projectedKilometers / 1000).toLocaleString('pt-BR')} viagens SP-RJ</span>
+                                                                </div>
+                                                                <div className="flex justify-between">
+                                                                    <span className="text-gray-600">Tempo de uso:</span>
+                                                                    <span className="font-medium">{Math.floor(projection.projectedKilometers / 50000).toLocaleString('pt-BR')} anos de uso médio</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="text-xs text-gray-500">
+                                                            🚦 Considere o trânsito e condições das vias para cálculos mais precisos.
+                                                        </div>
                                                     </div>
-                                                    <p className="text-2xl font-bold text-blue-900">
-                                                        {Math.floor(projection.projectedKilometers).toLocaleString('pt-BR')} km
-                                                    </p>
-                                                </CardContent>
-                                            </Card>
+                                                </DialogContent>
+                                            </Dialog>
 
-                                            <Card className="bg-gradient-to-br from-green-50 to-green-100 border-green-200">
-                                                <CardContent className="p-4">
-                                                    <div className="flex items-center gap-2 mb-2">
-                                                        <Target className="h-4 w-4 text-green-600" />
-                                                        <span className="text-sm font-medium text-green-800">Por mês</span>
+                                            <Dialog>
+                                                <DialogTrigger asChild>
+                                                    <Card className="cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-green-200/50 group bg-gradient-to-br from-green-50 to-green-100 border-green-200">
+                                                        <CardContent className="p-4">
+                                                            <div className="flex items-center gap-2 mb-2">
+                                                                <Target className="h-4 w-4 text-green-600 group-hover:animate-pulse" />
+                                                                <span className="text-sm font-medium text-green-800">Por mês</span>
+                                                            </div>
+                                                            <p className="text-2xl font-bold text-green-900">
+                                                                {Math.floor(projection.monthlyProjection).toLocaleString('pt-BR')} km
+                                                            </p>
+                                                            <div className="mt-2 text-xs text-green-600 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                                Clique para análise completa →
+                                                            </div>
+                                                        </CardContent>
+                                                    </Card>
+                                                </DialogTrigger>
+                                                <DialogContent className="sm:max-w-md">
+                                                    <DialogHeader>
+                                                        <DialogTitle className="flex items-center gap-2">
+                                                            <Calendar className="h-5 w-5 text-green-600" />
+                                                            Projeção Mensal Detalhada
+                                                        </DialogTitle>
+                                                    </DialogHeader>
+                                                    <div className="space-y-4">
+                                                        <div className="bg-gradient-to-r from-green-50 to-emerald-50 p-4 rounded-lg">
+                                                            <h4 className="font-semibold text-green-800 mb-2">Uso Mensal</h4>
+                                                            <div className="space-y-2 text-sm">
+                                                                <div className="flex justify-between">
+                                                                    <span className="text-gray-600">Quilometragem mensal:</span>
+                                                                    <span className="font-bold text-green-700">{Math.floor(projection.monthlyProjection).toLocaleString('pt-BR')} km</span>
+                                                                </div>
+                                                                <div className="flex justify-between">
+                                                                    <span className="text-gray-600">Viagens trabalho-casa:</span>
+                                                                    <span className="font-medium">{Math.floor(projection.monthlyProjection / 40).toLocaleString('pt-BR')} dias</span>
+                                                                </div>
+                                                                <div className="flex justify-between">
+                                                                    <span className="text-gray-600">Passeios de fim de semana:</span>
+                                                                    <span className="font-medium">{Math.floor(projection.monthlyProjection / 200).toLocaleString('pt-BR')} viagens</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="text-xs text-gray-500">
+                                                            📅 Planeje suas viagens mensais com base neste orçamento.
+                                                        </div>
                                                     </div>
-                                                    <p className="text-2xl font-bold text-green-900">
-                                                        {Math.floor(projection.monthlyProjection).toLocaleString('pt-BR')} km
-                                                    </p>
-                                                </CardContent>
-                                            </Card>
+                                                </DialogContent>
+                                            </Dialog>
 
-                                            <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200">
-                                                <CardContent className="p-4">
-                                                    <div className="flex items-center gap-2 mb-2">
-                                                        <Zap className="h-4 w-4 text-purple-600" />
-                                                        <span className="text-sm font-medium text-purple-800">Por semana</span>
+                                            <Dialog>
+                                                <DialogTrigger asChild>
+                                                    <Card className="cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-purple-200/50 group bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200">
+                                                        <CardContent className="p-4">
+                                                            <div className="flex items-center gap-2 mb-2">
+                                                                <Zap className="h-4 w-4 text-purple-600 group-hover:animate-pulse" />
+                                                                <span className="text-sm font-medium text-purple-800">Por semana</span>
+                                                            </div>
+                                                            <p className="text-2xl font-bold text-purple-900">
+                                                                {Math.floor(projection.weeklyProjection).toLocaleString('pt-BR')} km
+                                                            </p>
+                                                            <div className="mt-2 text-xs text-purple-600 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                                Clique para análise completa →
+                                                            </div>
+                                                        </CardContent>
+                                                    </Card>
+                                                </DialogTrigger>
+                                                <DialogContent className="sm:max-w-md">
+                                                    <DialogHeader>
+                                                        <DialogTitle className="flex items-center gap-2">
+                                                            <Zap className="h-5 w-5 text-purple-600" />
+                                                            Projeção Semanal Detalhada
+                                                        </DialogTitle>
+                                                    </DialogHeader>
+                                                    <div className="space-y-4">
+                                                        <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-4 rounded-lg">
+                                                            <h4 className="font-semibold text-purple-800 mb-2">Uso Semanal</h4>
+                                                            <div className="space-y-2 text-sm">
+                                                                <div className="flex justify-between">
+                                                                    <span className="text-gray-600">Quilometragem semanal:</span>
+                                                                    <span className="font-bold text-purple-700">{Math.floor(projection.weeklyProjection).toLocaleString('pt-BR')} km</span>
+                                                                </div>
+                                                                <div className="flex justify-between">
+                                                                    <span className="text-gray-600">Dias úteis (5 dias):</span>
+                                                                    <span className="font-medium">{Math.floor(projection.weeklyProjection / 5).toLocaleString('pt-BR')} km/dia</span>
+                                                                </div>
+                                                                <div className="flex justify-between">
+                                                                    <span className="text-gray-600">Fim de semana (2 dias):</span>
+                                                                    <span className="font-medium">{Math.floor(projection.weeklyProjection / 7).toLocaleString('pt-BR')} km/dia</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="text-xs text-gray-500">
+                                                            ⚡ Distribua seu uso de forma inteligente durante a semana.
+                                                        </div>
                                                     </div>
-                                                    <p className="text-2xl font-bold text-purple-900">
-                                                        {Math.floor(projection.weeklyProjection).toLocaleString('pt-BR')} km
-                                                    </p>
-                                                </CardContent>
-                                            </Card>
+                                                </DialogContent>
+                                            </Dialog>
 
-                                            <Card className="bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200">
-                                                <CardContent className="p-4">
-                                                    <div className="flex items-center gap-2 mb-2">
-                                                        <Info className="h-4 w-4 text-orange-600" />
-                                                        <span className="text-sm font-medium text-orange-800">Por dia</span>
+                                            <Dialog>
+                                                <DialogTrigger asChild>
+                                                    <Card className="cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-orange-200/50 group bg-gradient-to-br from-orange-50 to-orange-100 border-orange-200">
+                                                        <CardContent className="p-4">
+                                                            <div className="flex items-center gap-2 mb-2">
+                                                                <Info className="h-4 w-4 text-orange-600 group-hover:animate-pulse" />
+                                                                <span className="text-sm font-medium text-orange-800">Por dia</span>
+                                                            </div>
+                                                            <p className="text-2xl font-bold text-orange-900">
+                                                                {Math.floor(projection.dailyProjection).toLocaleString('pt-BR')} km
+                                                            </p>
+                                                            <div className="mt-2 text-xs text-orange-600 opacity-0 group-hover:opacity-100 transition-opacity">
+                                                                Clique para análise completa →
+                                                            </div>
+                                                        </CardContent>
+                                                    </Card>
+                                                </DialogTrigger>
+                                                <DialogContent className="sm:max-w-md">
+                                                    <DialogHeader>
+                                                        <DialogTitle className="flex items-center gap-2">
+                                                            <Info className="h-5 w-5 text-orange-600" />
+                                                            Projeção Diária Detalhada
+                                                        </DialogTitle>
+                                                    </DialogHeader>
+                                                    <div className="space-y-4">
+                                                        <div className="bg-gradient-to-r from-orange-50 to-amber-50 p-4 rounded-lg">
+                                                            <h4 className="font-semibold text-orange-800 mb-2">Uso Diário</h4>
+                                                            <div className="space-y-2 text-sm">
+                                                                <div className="flex justify-between">
+                                                                    <span className="text-gray-600">Quilometragem diária:</span>
+                                                                    <span className="font-bold text-orange-700">{Math.floor(projection.dailyProjection).toLocaleString('pt-BR')} km</span>
+                                                                </div>
+                                                                <div className="flex justify-between">
+                                                                    <span className="text-gray-600">Tempo de direção:</span>
+                                                                    <span className="font-medium">{Math.floor(projection.dailyProjection / 50).toLocaleString('pt-BR')} horas</span>
+                                                                </div>
+                                                                <div className="flex justify-between">
+                                                                    <span className="text-gray-600">Rotas possíveis:</span>
+                                                                    <span className="font-medium">{Math.floor(projection.dailyProjection / 20).toLocaleString('pt-BR')} viagens curtas</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="text-xs text-gray-500">
+                                                            🌅 Otimize seu roteiro diário para maximizar cada quilômetro.
+                                                        </div>
                                                     </div>
-                                                    <p className="text-2xl font-bold text-orange-900">
-                                                        {Math.floor(projection.dailyProjection).toLocaleString('pt-BR')} km
-                                                    </p>
-                                                </CardContent>
-                                            </Card>
+                                                </DialogContent>
+                                            </Dialog>
                                         </div>
                                     </div>
                                 )}
