@@ -1,0 +1,128 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --background: 240 10% 3.9%;
+        --background-secondary: 240 10% 6%;
+        --background-tertiary: 240 10% 8%;
+        --background-card: 240 10% 10%;
+        --background-elevated: 240 10% 12%;
+
+        --foreground: 0 0% 98%;
+        --foreground-secondary: 240 5% 65%;
+        --foreground-tertiary: 240 4% 46%;
+        --foreground-disabled: 240 4% 32%;
+
+        --card: 240 10% 10%;
+        --card-foreground: 0 0% 98%;
+        --card-hover: 240 10% 15%;
+
+        --popover: 240 10% 10%;
+        --popover-foreground: 0 0% 98%;
+
+        --primary: 0 0% 98%;
+        --primary-foreground: 240 10% 3.9%;
+
+        --secondary: 240 10% 15%;
+        --secondary-foreground: 0 0% 98%;
+
+        --muted: 240 10% 23%;
+        --muted-foreground: 240 5% 65%;
+
+        --accent: 142 76% 36%;
+        --accent-foreground: 0 0% 98%;
+        --accent-light: 142 76% 42%;
+
+        --destructive: 0 63% 31%;
+        --destructive-foreground: 0 0% 98%;
+
+        --warning: 38 92% 50%;
+        --warning-foreground: 0 0% 98%;
+
+        --info: 221 83% 53%;
+        --info-foreground: 0 0% 98%;
+
+        --border: 240 10% 15%;
+        --border-secondary: 240 10% 20%;
+        --border-focus: 0 0% 98%;
+        --input: 240 10% 20%;
+        --ring: 0 0% 98%;
+
+        --sidebar-background: 240 10% 6%;
+        --sidebar-foreground: 0 0% 98%;
+        --sidebar-primary: 0 0% 98%;
+        --sidebar-primary-foreground: 240 10% 3.9%;
+        --sidebar-accent: 240 10% 15%;
+        --sidebar-accent-foreground: 0 0% 98%;
+        --sidebar-border: 240 10% 12%;
+        --sidebar-ring: 0 0% 98%;
+
+        --radius: 0.75rem;
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+
+    body {
+        @apply bg-background text-foreground antialiased;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+}
+
+@layer components {
+    .metric-icon-money {
+        @apply bg-accent/15 text-accent;
+    }
+
+    .metric-icon-fuel {
+        @apply bg-info/15 text-info;
+    }
+
+    .metric-icon-distance {
+        @apply bg-warning/15 text-warning;
+    }
+
+    .metric-icon-consumption {
+        @apply bg-white/10 text-white;
+    }
+
+    .sidebar-active-indicator {
+        @apply absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-6 bg-white rounded-r-sm;
+    }
+
+    .transition-uber {
+        @apply transition-all duration-200 ease-out;
+    }
+
+    .card-hover {
+        @apply hover:bg-card-hover hover:border-border-secondary transition-uber;
+    }
+
+    .text-gradient-brand {
+        @apply bg-gradient-to-r from-accent to-accent-light bg-clip-text text-transparent;
+    }
+}
+
+@layer utilities {
+    .scrollbar-uber::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .scrollbar-uber::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    .scrollbar-uber::-webkit-scrollbar-thumb {
+        background: hsl(var(--border));
+        border-radius: 3px;
+    }
+
+    .scrollbar-uber::-webkit-scrollbar-thumb:hover {
+        background: hsl(var(--border-secondary));
+    }
+}
