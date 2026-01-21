@@ -46,10 +46,14 @@ export default function Planos() {
 
     const getPlanColor = (planId: string) => {
         switch (planId) {
-            case 'free': return 'border-gray-200 bg-gray-50';
-            case 'premium-monthly': return 'border-blue-200 bg-blue-50';
-            case 'premium-yearly': return 'border-purple-200 bg-purple-50';
-            default: return 'border-gray-200';
+            case 'free':
+                return 'border-border bg-card';
+            case 'premium-monthly':
+                return 'border-info/30 bg-card';
+            case 'premium-yearly':
+                return 'border-accent/40 bg-card';
+            default:
+                return 'border-border bg-card';
         }
     };
 
@@ -74,21 +78,21 @@ export default function Planos() {
 
                 {/* Current Status */}
                 {isPremium && (
-                    <Card className="border-green-200 bg-green-50">
+                    <Card className="border-accent/30 bg-accent/10">
                         <CardContent className="p-4">
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-3">
-                                    <div className="bg-green-100 p-2 rounded-full">
-                                        <Crown className="h-5 w-5 text-green-600" />
+                                    <div className="bg-accent/15 p-2 rounded-full">
+                                        <Crown className="h-5 w-5 text-accent" />
                                     </div>
                                     <div>
-                                        <h3 className="font-semibold text-green-800">Assinatura Premium Ativa</h3>
-                                        <p className="text-sm text-green-600">
+                                        <h3 className="font-semibold text-foreground">Assinatura Premium Ativa</h3>
+                                        <p className="text-sm text-foreground-secondary">
                                             {currentPlan?.name} • {daysUntilExpiry > 0 ? `${daysUntilExpiry} dias restantes` : 'Renovação automática'}
                                         </p>
                                     </div>
                                 </div>
-                                <Badge className="bg-green-100 text-green-800 border-green-200">
+                                <Badge className="bg-accent/15 text-accent border-accent/30">
                                     Ativo
                                 </Badge>
                             </div>
@@ -115,17 +119,17 @@ export default function Planos() {
 
                             <CardHeader className="text-center pb-4">
                                 <div className="flex justify-center mb-2">
-                                    <div className={`p-3 rounded-full ${plan.id === 'free' ? 'bg-gray-200 text-gray-600' :
-                                            plan.id === 'premium-monthly' ? 'bg-blue-200 text-blue-600' :
-                                                'bg-purple-200 text-purple-600'
+                                    <div className={`p-3 rounded-full ${plan.id === 'free' ? 'bg-muted text-foreground-secondary' :
+                                        plan.id === 'premium-monthly' ? 'bg-info/15 text-info' :
+                                            'bg-accent/15 text-accent'
                                         }`}>
                                         {getPlanIcon(plan.id)}
                                     </div>
                                 </div>
-                                <CardTitle className="text-xl font-bold">{plan.name}</CardTitle>
+                                <CardTitle className="text-xl font-bold text-foreground">{plan.name}</CardTitle>
                                 <div className="mt-2">
-                                    <span className="text-3xl font-bold">{formatCurrency(plan.price)}</span>
-                                    <span className="text-muted-foreground">/{plan.billingCycle === 'monthly' ? 'mês' : 'ano'}</span>
+                                    <span className="text-3xl font-bold text-foreground">{formatCurrency(plan.price)}</span>
+                                    <span className="text-foreground-secondary">/{plan.billingCycle === 'monthly' ? 'mês' : 'ano'}</span>
                                 </div>
                             </CardHeader>
 
@@ -135,7 +139,7 @@ export default function Planos() {
                                     {plan.features.map((feature, index) => (
                                         <div key={index} className="flex items-start gap-2">
                                             <Check className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                                            <span className="text-sm">{feature}</span>
+                                            <span className="text-sm text-foreground">{feature}</span>
                                         </div>
                                     ))}
                                 </div>
@@ -173,7 +177,7 @@ export default function Planos() {
                                 {/* Savings Badge */}
                                 {plan.id === 'premium-yearly' && (
                                     <div className="text-center">
-                                        <Badge className="bg-green-100 text-green-800 border-green-200">
+                                        <Badge className="bg-accent/15 text-accent border-accent/30">
                                             Economia de 33% (2 meses grátis)
                                         </Badge>
                                     </div>
@@ -186,40 +190,40 @@ export default function Planos() {
                 {/* Comparison Table */}
                 <Card>
                     <CardHeader>
-                        <CardTitle>Comparativo de Recursos</CardTitle>
+                        <CardTitle className="text-foreground">Comparativo de Recursos</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="overflow-x-auto">
                             <table className="w-full">
                                 <thead>
-                                    <tr className="border-b">
-                                        <th className="text-left p-3">Recurso</th>
+                                    <tr className="border-b border-border">
+                                        <th className="text-left p-3 text-foreground">Recurso</th>
                                         {plans.map((plan) => (
-                                            <th key={plan.id} className="text-center p-3">
+                                            <th key={plan.id} className="text-center p-3 text-foreground">
                                                 {plan.name}
                                             </th>
                                         ))}
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr className="border-b">
-                                        <td className="p-3 font-medium">Veículos</td>
+                                    <tr className="border-b border-border">
+                                        <td className="p-3 font-medium text-foreground">Veículos</td>
                                         {plans.map((plan) => (
-                                            <td key={plan.id} className="text-center p-3">
+                                            <td key={plan.id} className="text-center p-3 text-foreground">
                                                 {plan.limits.vehicles === 999 ? 'Ilimitados' : plan.limits.vehicles}
                                             </td>
                                         ))}
                                     </tr>
-                                    <tr className="border-b">
-                                        <td className="p-3 font-medium">Histórico de abastecimentos</td>
+                                    <tr className="border-b border-border">
+                                        <td className="p-3 font-medium text-foreground">Histórico de abastecimentos</td>
                                         {plans.map((plan) => (
-                                            <td key={plan.id} className="text-center p-3">
+                                            <td key={plan.id} className="text-center p-3 text-foreground">
                                                 {plan.limits.refuels === 999 ? 'Completo' : `${plan.limits.refuels} últimos`}
                                             </td>
                                         ))}
                                     </tr>
-                                    <tr className="border-b">
-                                        <td className="p-3 font-medium">OCR com câmera</td>
+                                    <tr className="border-b border-border">
+                                        <td className="p-3 font-medium text-foreground">OCR com câmera</td>
                                         {plans.map((plan) => (
                                             <td key={plan.id} className="text-center p-3">
                                                 {plan.limits.ocrScans > 0 ? (
@@ -230,8 +234,8 @@ export default function Planos() {
                                             </td>
                                         ))}
                                     </tr>
-                                    <tr className="border-b">
-                                        <td className="p-3 font-medium">Ranking de postos</td>
+                                    <tr className="border-b border-border">
+                                        <td className="p-3 font-medium text-foreground">Ranking de postos</td>
                                         {plans.map((plan) => (
                                             <td key={plan.id} className="text-center p-3">
                                                 {plan.limits.stationRanking ? (
@@ -242,8 +246,8 @@ export default function Planos() {
                                             </td>
                                         ))}
                                     </tr>
-                                    <tr className="border-b">
-                                        <td className="p-3 font-medium">Insights avançados</td>
+                                    <tr className="border-b border-border">
+                                        <td className="p-3 font-medium text-foreground">Insights avançados</td>
                                         {plans.map((plan) => (
                                             <td key={plan.id} className="text-center p-3">
                                                 {plan.limits.insights ? (
